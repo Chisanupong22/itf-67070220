@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <title>Hello</title>
+</head>
+<body>
+    <div class="lol">
+        <div>Profile</div>
+    </div>
+    <div class="center">
+        <div class="profile" id="profile">
+            <div class="notify"><p>99999</p></div>
+        </div>
+        <h1 id='username'>Username : Chisanupong</h1>
+        <div class="input">
+            <label>Set Username:</label>
+            <input type="text" id="input-name">
+            <button onclick="setName()">Set</button><br>
+
+            <label>Set Img Profile:</label>
+            <input type="text" id="img">
+            <button onclick="setImg()">Set</button><br>
+
+            <input type="text" id="nameinput" placeholder="Enter name">
+            <input type="text" id="phoneinput" placeholder="Enter phone"><br>
+
+            <table id="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                </tr>
+            </table>
+            <button onclick="addRow()">Add</button>
+            <button onclick="saveCSV()">Save CSV</button>
+        </div>
+    </div>
+
+    <script>
+        const nameElement = document.getElementById("username");
+        const inputName = document.getElementById("input-name");
+        const profile = document.getElementById("profile");
+        const inputImg = document.getElementById("img");
+        const table = document.getElementById("table");
+        const nameInput = document.getElementById("nameinput");
+        const phoneInput = document.getElementById("phoneinput");
+        const phoneNumbers = [];
+
+        function setName(){
+            nameElement.textContent = "Username: " + inputName.value;
+            inputName.value = "";  
+        }
+
+        function setImg(){
+            profile.style.backgroundImage = "url(" + inputImg.value + ")";
+            inputImg.value = "";  
+        }
+
+        function addRow() {
+            const row = document.createElement("tr");
+            const cell1 = document.createElement("td");
+            const cell2 = document.createElement("td");
+            
+            const nameValue = nameInput.value || "XD"; // Fallback value
+            const phoneValue = phoneInput.value || "123"; // Fallback value
+
+            cell1.textContent = nameValue;
+            cell2.textContent = phoneValue;
+            
+            row.appendChild(cell1);
+            row.appendChild(cell2);
+            table.appendChild(row);
+            
+            phoneNumbers.push([nameValue, phoneValue]); // Store the data
+
+            nameInput.value = "";  // Clear input fields
+            phoneInput.value = "";
+        }
+
+        function saveCSV() {
+            const csvContent = phoneNumbers.map(row => row.join(",")).join("\n"); // Convert array to CSV string
+            const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", "data.csv");
+            link.style.visibility = "hidden";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+
+    <footer>
+        <p>Chisanupong</p>
+        <a href="https://www.facebook.com/login/?next">67070220</a>
+    </footer>
